@@ -14,6 +14,7 @@ export async function loader() {
 
 export async function deleter(index) {
   const contacts = await deleteContact(index);
+  return { contacts };
 }
 
 export default function Root() {
