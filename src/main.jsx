@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: rootLoader,
     action: rootAction,
-    delete: rootDeleter,
+    deleter: rootDeleter,
     children: [
       {
         // ":" turns the following into a "dynamic segment"
