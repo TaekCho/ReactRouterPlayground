@@ -1,15 +1,15 @@
 import { Form, useLoaderData } from "react-router-dom";
 import { getContact } from "../contacts";
-import { deleteContact } from "../contacts";
 
 export async function loader({ params }) {
   const contact = await getContact(params.contactId);
   return { contact };
 }
 
-export async function deleter(index) {
-  const contacts = await deleteContact(index);
-}
+// INITIAL ERROR
+// export async function deleter(index) {
+//   const contacts = await deleteContact(index);
+// }
 
 export default function Contact() {
   const contact = useLoaderData();
@@ -56,7 +56,7 @@ export default function Contact() {
           </Form>
           <Form
             method="post"
-            action={`/contacts/:contactId/destroy`}
+            action="destroy"
             onSubmit={(event) => {
               if (!confirm("Please confirm you want to delete this record.")) {
                 event.preventDefault();

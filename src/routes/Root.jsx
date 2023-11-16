@@ -1,16 +1,17 @@
 import {
   Outlet,
-  Link,
   useLoaderData,
   Form,
   redirect,
   NavLink,
+  useNavigation,
 } from "react-router-dom";
-import { getContacts, createContact, deleteContact } from "../contacts";
+import { getContacts, createContact } from "../contacts";
 
 // make a new contact
 export async function action() {
   const contact = await createContact();
+
   return redirect(`/contacts/${contact.id}/edit`);
 }
 
@@ -19,13 +20,15 @@ export async function loader() {
   return { contacts };
 }
 
-export async function deleter(index) {
-  const contacts = await deleteContact(index);
-  return { contacts };
-}
+// INITIAL ERROR
+// export async function deleter(index) {
+//   const contacts = await deleteContact(index);
+//   return { contacts };
+// }
 
 export default function Root() {
   const { contacts } = useLoaderData();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -48,14 +51,6 @@ export default function Root() {
           </Form>
         </div>
         <nav>
-          {/* <ul>
-            <li>
-              <Link to={`/contacts/1`}>Your Name</Link>
-            </li>
-            <li>
-              <Link to={`/contacts/2`}>Your Friend</Link>
-            </li>
-          </ul> */}
           {contacts.length ? (
             <ul>
               {contacts.map((contact) => (
@@ -86,7 +81,10 @@ export default function Root() {
           )}
         </nav>
       </div>
-      <div id="detail">
+      <div
+        id="detail"
+        className={navigation.state === "loading" ? "loading" : ""}
+      >
         <Outlet />
       </div>
     </>
